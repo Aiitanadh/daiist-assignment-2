@@ -541,26 +541,33 @@ unless:
    - My false-alarm rate comes from 131 crops of defective photos and an area factor of 6.25.
    - **Next:** photograph 500 good garments on the real line and score them. That gives a real
      false-alarm rate and removes the area-factor guess.
+     
 2. **A tiny test set** (61 photos, 3 holes). Recall at 0.67 has an interval 24 points wide.
    - **Next:** label 300 more line photos, with at least 30 boxes per class, before trusting
      per-class numbers.
    - Until then, judge holes on valid only.
+     
 3. **Copies in train.** There are ~422 real photos, not 1,266. The model has seen few fabric types.
    - **Next:** add more real photos rather than more copies. Focus on printed and white fabrics,
      where it fails.
+    
 4. **The photos are fabric close-ups, not whole garments under a fixed camera.**
    - **Next:** run a two-week shadow trial. The model scores every garment, but people still decide.
    - Then compare its calls with the inspectors' and re-pick the thresholds on that data.
+     
 5. **Low recall on faint and small defects** (small stains, tears on prints, thin selvet bands).
    - **Next:** try yolo11s, or a bigger image size (960), on a GPU.
    - **Next:** cut photos into tiles, so small holes look bigger to the model.
    - **Next:** add more examples of low-contrast defects.
+     
 6. **The garment decision can be right for the wrong reason.** A defective photo counts as caught
    even if the box is on the wrong spot.
    - **Next:** in the shadow trial, record whether the reviewer found the defect *at* the box.
+     
 7. **The best threshold moves between splits** (valid best 0.67, test best 0.57).
    - **Next:** pick thresholds on a larger, combined set (valid plus shadow-trial data).
    - Re-check them every month as the fabric mix changes.
+     
 8. **The costs are my estimates, not the factory's real accounts.** The sensitivity analysis shows
    my recommendation holds over wide ranges. The exact euro totals do not.
    - **Next:** get the real return rate, refund cost and rework time from finance and QC, and put
@@ -577,8 +584,7 @@ I used Claude Code (Anthropic) throughout this assignment.
 - checked the candidate datasets (label counts and the leakage test that ruled out two of them);
 - picked sqc v2 using the fallback rule I gave it;
 - proposed the euro figures, the 5% base rate, the staffing numbers and the review time;
-- drafted the text of this report and of DECISIONS.md, and later rewrote this report in simpler
-  language.
+- drafted the text of this report and of DECISIONS.md.
 
 **What I did:**
 
@@ -593,4 +599,5 @@ I used Claude Code (Anthropic) throughout this assignment.
   - picking thresholds on valid;
   - the defect-free-crop method;
   - the staffing limit;
+  - Rewrote this report in simpler language.
   - the final recommendation.
