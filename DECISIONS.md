@@ -20,6 +20,40 @@ person checks the boxed spot. At **0.93 or above**, it goes to rework.
 
 ---
 
+## Key terms in one line each
+
+- **Positive class**: the thing I am trying to find. Here, "garment has a defect".
+- **Box**: a rectangle the model draws around a defect, with a label and a confidence.
+- **Confidence**: a number from 0 to 1 that says how sure the model is about a box.
+- **Threshold**: the cut-off confidence I choose. At or above it, the model says "defect".
+- **False negative**: a real defect the model misses, so a bad garment ships.
+- **False positive**: a good garment the model flags, a false alarm.
+- **True positive / true negative**: a defect caught / a good garment correctly passed.
+- **Base rate**: how often a defect really happens (I assume 5%).
+- **Precision**: of the model's alarms, the share that are real defects.
+- **Recall**: of the real defects, the share the model catches.
+- **IoU**: how much a predicted box overlaps the real one, from 0 to 1.
+- **AP50**: one score from 0 to 1 for how well the model finds one class (a box counts if IoU ≥ 0.5).
+- **mAP50**: AP50 averaged over all classes. My headline number.
+- **mAP50-95**: the same, but with stricter overlap rules, so it rewards tight boxes.
+- **Confusion matrix**: a table of what was really there (rows) against what the model said
+  (columns).
+- **Train / valid / test split**: photos to learn from / to tune choices / to measure the final
+  result.
+- **Leakage**: test photos that also appear in train, so the test is not honest.
+- **Augmentation**: slightly changed copies of photos (rotation, noise) to have more training
+  examples.
+- **Epoch**: one full pass of training over the train set.
+- **Finetune**: start from a model that already learned general images and keep training it on mine.
+- **COCO zero-shot**: the original model trained on 80 everyday objects, used without any training
+  on my photos.
+- **Baseline**: a simple comparison model, to check that the real model adds value.
+- **Bootstrap**: redo the calculation many times on random re-draws of the test data, to see how
+  much the result moves.
+- **95% interval**: the range where the true value most likely lies.
+- **Sensitivity analysis**: change one assumption at a time and see if the answer changes.
+- **FTE**: full-time equivalent, one person working full time.
+
 ## 1. The business problem
 
 **What I chose.** End-of-line quality control in a clothing factory: pass / review / reject for each
@@ -180,7 +214,7 @@ false rejects. This is why my model-alone threshold is high (0.67).
 - **The headline is carried by stain:** AP50 0.72 on test, 0.76 on valid, and the most training
   boxes.
 - **Weakest:**
-  - **selvet localisation:** AP50-95 0.20; long bands are hard to box exactly;
+  - **selvet box placement:** AP50-95 0.196 on test (0.205 on valid); long bands are hard to box exactly;
   - **tear on valid:** AP50 0.42, precision 0.41; tears on prints look like the print.
 - **It never confuses one defect type with another.** All errors are misses (72 of 103 test boxes
   at 0.67) plus 4 false boxes. When it draws a box, it is usually right. It is just too quiet.
@@ -295,8 +329,8 @@ recall gains only 50 × €25 / 100 = €12.5. Good garments are 19× more commo
    here.
 
 8. **Which class carries your headline mAP50 of 0.633, and where does the model fail?**
-   Stain (AP50 0.72). It fails on selvet localisation (AP50-95 0.20), on tears on printed fabric,
-   and on small or faint stains and holes. It never mixes up defect types; it misses them.
+   Stain (AP50 0.72). It places selvet boxes badly (AP50-95 0.196). It misses tears on printed
+   fabric, and small or faint stains and holes. It never mixes up defect types; it misses them.
 
 9. **Why did you choose the threshold on valid, not test?**
    Choosing on test would make the test result optimistic. The test optimum (0.57) differs from the
