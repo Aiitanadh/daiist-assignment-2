@@ -1,9 +1,9 @@
 # Assignment 2 Report
 
-- **Name**: *(to fill in)*
-- **Student ID**: *(to fill in)*
+- **Name**: Aitana Damotte Huedo
+- **Student ID**: 18564
 - **Email**: adamotte.ieu2022@student.ie.edu
-- **Group**: *(to fill in: BBADBA 5A | BBADBA 5B | PPLEDBA 5A | BDBA 3A)*
+- **Group**: BBADBA 5B 
 
 How to reproduce: `uv run python main.py train` runs the whole pipeline (download, describe, finetune,
 evaluate, cost, sensitivity). `uv run python main.py app` opens the dashboard. Every assumption is in
@@ -454,4 +454,3 @@ every decision in this report:
 - the staffing limit;
 - the final recommendation.
 
-I can explain each of them without the code.
